@@ -1,3 +1,3 @@
 # ohtuvarasto
 
-![GHA workflow badge](https://github.com/Septicuss/ohtuvarasto/actions/workflows/CI/badge.svg)
+[![CI](https://github.com/Septicuss/ohtuvarasto/actions/workflows/main.yml/badge.svg)](https://github.com/Septicuss/ohtuvarasto/actions/workflows/main.yml)
