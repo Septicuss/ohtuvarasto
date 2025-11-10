@@ -1,9 +1,6 @@
 repos:
-- repo: local
+- repo: https://github.com/pre-commit/mirrors-pylint
+  rev: v3.0.0a5
   hooks:
     - id: pylint
-      name: pylint
-      entry: pylint
-      language: system
-      types: [python]
       require_serial: true
