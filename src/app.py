@@ -126,10 +126,14 @@ def add_to_warehouse(warehouse_id):
     maara_str = request.form.get('maara', '0')
     try:
         maara = float(maara_str)
+        warehouses[warehouse_id]['varasto'].lisaa_varastoon(maara)
     except ValueError:
-        maara = 0
-
-    warehouses[warehouse_id]['varasto'].lisaa_varastoon(maara)
+        return render_template(
+            'view_warehouse.html',
+            warehouse_id=warehouse_id,
+            warehouse=warehouses[warehouse_id],
+            error='Invalid amount value'
+        )
     return redirect(url_for('view_warehouse', warehouse_id=warehouse_id))
 
 
@@ -141,12 +145,18 @@ def remove_from_warehouse(warehouse_id):
     maara_str = request.form.get('maara', '0')
     try:
         maara = float(maara_str)
+        warehouses[warehouse_id]['varasto'].ota_varastosta(maara)
     except ValueError:
-        maara = 0
-
-    warehouses[warehouse_id]['varasto'].ota_varastosta(maara)
+        return render_template(
+            'view_warehouse.html',
+            warehouse_id=warehouse_id,
+            warehouse=warehouses[warehouse_id],
+            error='Invalid amount value'
+        )
     return redirect(url_for('view_warehouse', warehouse_id=warehouse_id))
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    import os
+    debug_mode = os.environ.get('FLASK_DEBUG', 'False').lower() == 'true'
+    app.run(debug=debug_mode)

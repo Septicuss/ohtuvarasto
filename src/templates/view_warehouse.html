@@ -9,6 +9,10 @@
 
 <h1>{{ warehouse.name }}</h1>
 
+{% if error %}
+<div class="error">{{ error }}</div>
+{% endif %}
+
 <div class="warehouse-item">
     <h3>Status</h3>
     <p><strong>Capacity:</strong> {{ warehouse.varasto.tilavuus }}</p>

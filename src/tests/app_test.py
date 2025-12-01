@@ -161,6 +161,32 @@ class TestFlaskApp(unittest.TestCase):
         )
         self.assertEqual(response.status_code, 200)
 
+    def test_add_invalid_amount(self):
+        self.client.post(
+            '/warehouse/create',
+            data={'name': 'Test Warehouse', 'tilavuus': '100', 'alku_saldo': '0'}
+        )
+        response = self.client.post(
+            '/warehouse/1/add',
+            data={'maara': 'invalid'}
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertIn(b'Invalid amount value', response.data)
+        self.assertEqual(warehouses[1]['varasto'].saldo, 0.0)
+
+    def test_remove_invalid_amount(self):
+        self.client.post(
+            '/warehouse/create',
+            data={'name': 'Test Warehouse', 'tilavuus': '100', 'alku_saldo': '50'}
+        )
+        response = self.client.post(
+            '/warehouse/1/remove',
+            data={'maara': 'invalid'}
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertIn(b'Invalid amount value', response.data)
+        self.assertEqual(warehouses[1]['varasto'].saldo, 50.0)
+
     def test_multiple_warehouses(self):
         self.client.post(
             '/warehouse/create',
